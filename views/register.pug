@@ -4,7 +4,7 @@ html
 		title MyFacebook
 		link(rel='stylesheet', href='/stylesheets/style.css')
 	body
-		.w3-container(style='text-align:center;padding-top:80px;max-width:400px;margin:0 auto;')
+		.w3-container(style='text-align:center;padding-top:50px;max-width:400px;margin:0 auto;')
 			.w3-card-4
 				header.w3-container.w3-blue
 					h1 myFacebook
@@ -17,7 +17,8 @@ html
 						input.w3-input(type="password" name="password" placeholder="Password" style='margin-top:10px')
 						input.w3-input(type="password" name="password" placeholder="Repetir password" style='margin-top:10px')
 						input.w3-input(type='date' name='dataNascimento' style='margin-top:10px')
-						input.w3-input(type='radio' name='genero' value='masculino' checked) M
-						input.w3-input(type='radio' name='genero' value='feminino')
+						select.w3-input(style='margin-top:10px' name='genero')
+							option(value='masculino') Masculino
+							option(value='feminino') Feminino
 						input.w3-input(type="text" name="localidade" placeholder="Localidade" style='margin-top:10px')
 						input.w3-btn.w3-blue(type="submit" value="Registar" style='margin-top:10px;margin-bottom:20px')
