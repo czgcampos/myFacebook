@@ -4,7 +4,7 @@ var axios = require('axios')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('register', { title: 'Express' });
+  res.render('feed', { title: 'Express' });
 });
 
 module.exports = router;
