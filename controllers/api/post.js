@@ -16,6 +16,22 @@ module.exports.postsAutor = autor => {
 		.exec()
 }
 
+// Lista as publicações públicas do autor A
+module.exports.postsPublicosAutor = autor => {
+	return Post
+		.find({privado: false})
+		.sort({data: -1})
+		.exec()
+}
+
+// Lista as publicações privadas do autor A
+module.exports.postsPrivadosAutor = autor => {
+	return Post
+		.find({privado: true})
+		.sort({data: -1})
+		.exec()
+}
+
 // Devolve a informação de uma publicação
 module.exports.post = pid => {
 	return Post
