@@ -11,14 +11,14 @@ html
 				div
 					h3 Log In
 				div
-					form.w3-container(method="POST" action="/login")
+					form.w3-container(method="POST" action="/users/login")
 						input.w3-input(type="text" name="email" placeholder="example@mail.com" style='margin-top:10px' required)
 						input.w3-input(type="password" name="password" placeholder="********" style='margin-top:10px' required)
 						input.w3-btn.w3-blue(type="submit" value="Log In" style='margin-top:10px')
 				hr
 				div
-					a.w3-btn.w3-blue(href='http://localhost:5000//auth/facebook', style='width:40%') Facebook
+					a.w3-btn.w3-blue(href='http://localhost:5000/feed', style='width:40%') Facebook
 					a.w3-btn.w3-blue(href='http://localhost:5000/feed', style='margin-left:10px;width:40%') Google
 				hr
 				div
-					a.w3-btn.w3-blue(href='http://localhost:5000/registar', style='width:83%;margin-bottom:20px') Registar
+					a.w3-btn.w3-blue(href='http://localhost:5000/users/registar', style='width:83%;margin-bottom:20px') Registar
