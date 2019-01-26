@@ -25,7 +25,7 @@ router.get('/registar', function(req, res, next) {
 });
 
 router.post('/registar', function(req, res) {
-	var nome = req.body.nome;
+    var nome = req.body.nome;
     var email = req.body.email;
     var password = req.body.password;
     var password2 = req.body.password2;
@@ -80,7 +80,6 @@ router.get('/logout', function(req, res){
   res.redirect('/');
 });
 
-
 //falta verificar autenticação - estava a dar erro
 router.get('/feed', (req,res) => {
   axios.get('http://localhost:5000/api/posts/feedpublico')
@@ -108,6 +107,32 @@ router.get('/perfilprivado', (req,res) => {
       res.render('error', {error: erro, message: "Erro ao carregar dados da BD."})
     })
 })
+
+router.get('/adicionarpost', function(req, res, next) {
+    res.render('addPost');
+});
+
+router.post('/adicionarpost', function(req, res) {
+  axios.post('http://localhost:5000/api/posts/adicionarpost', req.body)
+    .then(()=> res.redirect('http://localhost:5000/feed'))
+    .catch(erro => {
+      console.log('Erro ao inserir dados da BD.')
+      res.redirect('http://localhost:5000/adicionarpost')
+    })
+});
+
+router.get('/auth/facebook',
+  passport.authenticate('facebook'));
+
+
+  router.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    console.log("LOGADO COM O FACEBOOK -> "+req.user)
+    res.redirect('/feed');
+  }
+);
 
 
 module.exports = router;

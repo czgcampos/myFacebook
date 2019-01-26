@@ -2,17 +2,16 @@ var express = require('express');
 var router = express.Router();
 var axios = require('axios')
 
-router.get('/users/:idUser', function(req, res) {
-    axios.get('http://localhost:5000/api/users/user/' + req.params.idUser)
-      .then(resposta=> res.render('aboutMe', { user: resposta.data }))
+router.get('/post/:idPost', function(req, res) {
+    axios.get('http://localhost:5000/api/posts/post/' + req.params.idPost)
+      .then(resposta=> res.render('post', { post: resposta.data }))
       .catch(erro => {
-        console.log('Erro ao carregar user.')
-        res.render('error', {error: erro, message: "Erro ao carregar user da BD."})
+        console.log('Erro ao carregar post.')
+        res.render('error', {error: erro, message: "Erro ao carregar post da BD."})
       })
 })
   
 /* mudar a privacidade */
-/*
 router.patch('/post/:idPost', function(req, res) {
     axios.patch('http://localhost:5000/api/posts/post/' + req.params.idPost, req.body)
         .then(resposta=> res.render('post', { post: resposta.data }))
@@ -20,6 +19,6 @@ router.patch('/post/:idPost', function(req, res) {
         console.log('Erro ao carregar post.')
         res.render('error', {error: erro, message: "Erro ao carregar post da BD."})
         })
-})*/
+})
 
 module.exports = router;

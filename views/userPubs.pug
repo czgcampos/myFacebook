@@ -1,6 +1,6 @@
 extends header
 block content
-	each p in posts
+	each p in pubs
 		.w3-container(style='margin-bottom:20px;margin-top:20px')
 			div.w3-blue(style='padding:10px')
 				h4(style='display:inline-block;') Autor: 
@@ -15,6 +15,9 @@ block content
 				h6(style='display:inline-block;float:right')
 					if p.data
 						a(href='gukjn' style='float:right')= p.data
+				br
+				a.w3-btn.w3-blue(href='fazerlike') Editar Privacidade
+				a.w3-btn.w3-blue(href='fazerlike' style='padding-left:50px;padding-right:50px;float:right') Apagar
 			div(style='padding-left:10px;padding-right:10px')
 				p= p.texto
 				a.w3-btn.w3-blue(href='fazerlike' style='padding-left:50px;padding-right:50px') Like: (#{p.likes})

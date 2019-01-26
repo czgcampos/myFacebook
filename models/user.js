@@ -2,15 +2,21 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
 var UserSchema = new Schema({
-	nome: {type: String, required: true},
-	email: {type: String, required: true, unique: true},
-	password: {type: String, required: true},
-	dataNascimento : {type: Date, required: true},
-	genero: {type: String, required: true},
-	localidade: {type: String, required: true},
+	nome: {type: String},
+	email: {type: String, index: true},
+	password: {type: String},
+	dataNascimento : {type: Date},
+	genero: {type: String},
+	localidade: {type: String},
 	descricao: {type: String},
 	// guarda-se o path (acho que é melhor)
-	imagem: {type: String}
+	imagem: {type: String},
+	facebook: {
+		id: String,
+		token: String,
+		email: String,
+		name: String
+	}
 })
 
 module.exports = mongoose.model('Users', UserSchema, 'users')
