@@ -1,1 +1,46 @@
-extends header
+extends layout
+block content
+	.w3-container
+		.w3-card-4
+			header.w3-container.w3-costum-color-1
+				h1 
+					a.w3-btn.w3-hover-costum-color-2(href='http://localhost:5000/') MyFacebook
+					a.w3-btn.w3-hover-costum-color-2(href='http://localhost:5000/users/logout' style='float:right') Logout
+			.w3-container
+				div(style='max-width:25%;margin:50px;display:inline-block;float:left')
+					img(src='/media/received_1792512857507933.jpeg' style='width:100%;display:inline-block')
+					br
+					a.w3-btn.w3-hover-costum-color-2.w3-round-xxlarge.w3-costum-color-1(href='asdfg' style='padding-left:30px;padding-right:30px;width:100%;margin-top:20px') Editar Imagem
+				div(style='display:inline-block;width:55%;margin:50px')
+					form.w3-container(method="POST" action="jgkjhkj")
+						h1 Carlos Campos
+						input.w3-input.w3-costum-color-5(type="text" name="nome" placeholder="Nome" style='margin-top:10px')
+						br
+						b Email: 
+						a(href='mailto:') carloszgcampos1996@gmail.com
+						input.w3-input.w3-costum-color-5(type="text" name="email" placeholder="Email" style='margin-top:10px')
+						br
+						b Password: 
+						input.w3-input.w3-costum-color-5(type="password" name="password" placeholder="Password" style='margin-top:10px' required)
+						input.w3-input.w3-costum-color-5(type="password" name="password" placeholder="Repetir password" style='margin-top:10px' required)
+						br
+						b Data de Nascimento: 
+						a 20/03/1996
+						input.w3-input.w3-costum-color-5(type='date' name='dataNascimento' style='margin-top:10px')
+						br
+						b Género: 
+						a Masculino
+						select.w3-input.w3-costum-color-5(style='margin-top:10px' name='genero' required)
+							option(value='' hidden) Género
+							option(value='masculino') Masculino
+							option(value='feminino') Feminino
+						br
+						b Morada: 
+						a Avenida da Tapada
+						input.w3-input.w3-costum-color-5(type="text" name="localidade" placeholder="Morada" style='margin-top:10px' required)
+						br
+						b Descrição:
+						a Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+						textarea.w3-input.w3-costum-color-5(style='margin-top:10px' name='texto' rows='8' cols='132' placeholder='Descrição...')
+						br
+						input.w3-btn.w3-hover-costum-color-2.w3-round-xxlarge.w3-costum-color-1(type="submit" value="Editar" style='padding-left:30px;padding-right:30px;float:right')

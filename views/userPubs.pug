@@ -1,9 +1,9 @@
 extends header
-block content
+block content2
 	each p in pubs
 		.w3-container(style='margin-bottom:20px;margin-top:20px')
 			.w3-card-4
-				div.w3-blue(style='padding:10px')
+				div.w3-costum-color-1(style='padding:10px')
 					h4(style='display:inline-block;') Autor: 
 						a(href='sdsf')= p.autor
 					h4(style='display:inline-block;float:right') Categoria: 
@@ -17,12 +17,12 @@ block content
 						if p.data
 							a(href='gukjn' style='float:right')= p.data
 					br
-					a.w3-btn.w3-round-large.w3-blue(href='fazerlike') Editar Privacidade
-					a.w3-btn.w3-round-large.w3-blue(href='fazerlike' style='padding-left:50px;padding-right:50px;float:right') Apagar
+					a.w3-btn.w3-hover-costum-color-2.w3-round-xxlarge.w3-costum-color-1(href='fazerlike') Editar Privacidade
+					a.w3-btn.w3-hover-costum-color-2.w3-round-xxlarge.w3-costum-color-1(href='fazerlike' style='padding-left:50px;padding-right:50px;float:right') Apagar
 				div.w3-border(style='padding:10px')
 					p= p.texto
-					a.w3-btn.w3-round-large.w3-blue(href='fazerlike' style='padding-left:50px;padding-right:50px') Like: (#{p.likes})
-					a.w3-btn.w3-round-large.w3-blue(href='fazerlike' style='padding-left:50px;padding-right:50px;float:right') Partilhar
+					a.w3-btn.w3-hover-costum-color-2.w3-round-xxlarge.w3-costum-color-1(href='fazerlike' style='padding-left:50px;padding-right:50px') Like: (#{p.likes})
+					a.w3-btn.w3-hover-costum-color-2.w3-round-xxlarge.w3-costum-color-1(href='fazerlike' style='padding-left:50px;padding-right:50px;float:right') Partilhar
 				div.w3-border(id='comentarios' style='padding:10px')
 					h4(style='display:inline-block;') Comentários:
 					hr
@@ -36,5 +36,5 @@ block content
 					form.w3-container(id='myParaForm')
 						fieldset
 							legend Novo comentário
-							textarea.w3-input.w3-border.w3-light-grey(id='texto' rows='3' cols='80')
-							button.w3-btn.w3-round-large.w3-blue(id='adicionar' style='margin-top:5px') Adicionar comentário
+							textarea.w3-input.w3-border.w3-costum-color-5(id='texto' rows='3' cols='80')
+							button.w3-btn.w3-hover-costum-color-2.w3-round-xxlarge.w3-costum-color-1(id='adicionar' style='margin-top:5px') Adicionar comentário

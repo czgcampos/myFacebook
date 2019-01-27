@@ -1,6 +1,6 @@
 var express = require('express')
 var router = express.Router()
-var Post = require('../../controllers/api/Post')
+var Post = require('../../controllers/api/post')
 var url = require('url');
 
 var PostModel = require('../../models/post');

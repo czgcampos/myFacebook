@@ -12,12 +12,12 @@ var PostSchema = new Schema({
 	texto: {type: String, required: true},
 	data: {type: Date, default: Date.now},
 	comentarios: [CommentsSchema],
-	categoria: {type: String},
+	categoria: {type: String, required: true},
 	likes: {type: Number, default: 0},
 	hashtag: {type: String},
 	// ficamos só com o path
 	ficheiro: {type : String},
-	privacidade: {type : Boolean}
+	privacidade: {type : Boolean, required: true}
 })
 
 module.exports = mongoose.model('Posts', PostSchema, 'posts')
