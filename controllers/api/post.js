@@ -1,5 +1,6 @@
 var Post = require('../../models/post')
-var mongoose = require('mongoose')
+
+var ObjectId = require('mongoose').Types.ObjectId; 
 
 // Devolve a informação de uma publicação
 module.exports.getPost = pid => {
@@ -8,11 +9,12 @@ module.exports.getPost = pid => {
 		.exec()
 }
 
-// Fazer like
-module.exports.likeInc = pid => {
+module.exports.listaTodosUser = autor => {
 	return Post
-		.update({_id: pid},{$inc: {likes: 1}})
-		.exec()
+			.find({
+				autor: autor
+			})
+			.exec()
 }
 
 // Insere uma publicação
@@ -34,7 +36,7 @@ module.exports.listaPostsPublicos = (categoria, hashtag) => {
 			.find({
 				categoria: categoria,
 				hashtag: hashtag,
-				privado: false
+				privacidade: false
 			})
 			.sort({data: -1})
 			.exec()
@@ -43,7 +45,7 @@ module.exports.listaPostsPublicos = (categoria, hashtag) => {
 		return Post
 			.find({
 				categoria: categoria,
-				privado: false
+				privacidade: false
 			})
 			.sort({data: -1})
 			.exec()
@@ -52,7 +54,7 @@ module.exports.listaPostsPublicos = (categoria, hashtag) => {
 		return Post
 			.find({
 				hashtag: hashtag,
-				privado: false
+				privacidade: false
 			})
 			.sort({data: -1})
 			.exec()
@@ -60,7 +62,7 @@ module.exports.listaPostsPublicos = (categoria, hashtag) => {
 	else {
 		return Post
 			.find({
-				privado:false
+				privacidade:false
 			})
 			.sort({data: -1})
 			.exec()
@@ -75,7 +77,7 @@ module.exports.listaPostsPublicosAutor = (autor, categoria, hashtag) => {
 				autor: autor,
 				categoria: categoria,
 				hashtag: hashtag,
-				privado: false
+				privacidade: false
 			})
 			.sort({data: -1})
 			.exec()
@@ -85,7 +87,7 @@ module.exports.listaPostsPublicosAutor = (autor, categoria, hashtag) => {
 			.find({
 				autor: autor,
 				categoria: categoria,
-				privado: false
+				privacidade: false
 			})
 			.sort({data: -1})
 			.exec()
@@ -95,7 +97,7 @@ module.exports.listaPostsPublicosAutor = (autor, categoria, hashtag) => {
 			.find({
 				autor: autor,
 				hashtag: hashtag,
-				privado: false
+				privacidade: false
 			})
 			.sort({data: -1})
 			.exec()
@@ -104,7 +106,7 @@ module.exports.listaPostsPublicosAutor = (autor, categoria, hashtag) => {
 		return Post
 			.find({
 				autor: autor,
-				privado:false
+				privacidade:false
 			})
 			.sort({data: -1})
 			.exec()
@@ -118,7 +120,7 @@ module.exports.listaPostsPrivadosAutor = (autor, categoria, hashtag) => {
 				autor: autor,
 				categoria: categoria,
 				hashtag: hashtag,
-				privado: true
+				privacidade: true
 			})
 			.sort({data: -1})
 			.exec()
@@ -128,7 +130,7 @@ module.exports.listaPostsPrivadosAutor = (autor, categoria, hashtag) => {
 			.find({
 				autor: autor,
 				categoria: categoria,
-				privado: true
+				privacidade: true
 			})
 			.sort({data: -1})
 			.exec()
@@ -138,7 +140,7 @@ module.exports.listaPostsPrivadosAutor = (autor, categoria, hashtag) => {
 			.find({
 				autor: autor,
 				hashtag: hashtag,
-				privado: true
+				privacidade: true
 			})
 			.sort({data: -1})
 			.exec()
@@ -147,7 +149,7 @@ module.exports.listaPostsPrivadosAutor = (autor, categoria, hashtag) => {
 		return Post
 			.find({
 				autor: autor,
-				privado: true
+				privacidade: true
 			})
 			.sort({data: -1})
 			.exec()
@@ -155,8 +157,44 @@ module.exports.listaPostsPrivadosAutor = (autor, categoria, hashtag) => {
 }
 
 // Devolve a informação de uma publicação
-module.exports.atualizaPrivacidade = (pid, privacidade) => {
-	return Post
-		.updateOne({_id: pid},{$set: {privado:privacidade}})
-		.exec()
+module.exports.atualizaPrivacidade = (id) => {
+	return Post.findOne({_id: id}, function(err, post){            
+				if(post){
+					post.privacidade = !post.privacidade
+					post.save(function(erro) {
+						if (erro) console.log('Erro na privacidade do post: ' + erro);
+					});
+				}else{
+					console.log(err);
+				}
+			})
+			.exec();
+}
+
+module.exports.fazerLike = (id) => {
+	return Post.findOne({_id: id}, function(err, post){            
+				if(post){
+					post.likes += 1
+					post.save(function(erro) {
+						if (erro) console.log('Erro no gosto do post: ' + erro);
+					});
+				}else{
+					console.log(err);
+				}
+			})
+			.exec();
+}
+
+module.exports.addComentario = (id, autor, comentario) => {
+	return Post.findOne({_id:id}, function(err,post) {
+		if (post) {
+			post.comentarios.push({autor: autor, comentario: comentario})
+			post.save(function(erro) {
+				if (erro) console.log("erro no comentario "+erro);
+			})
+		} else {
+			console.log(erro);
+		}
+	})
+		.exec();
 }

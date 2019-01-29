@@ -8,16 +8,16 @@ var CommentsSchema = new Schema({
 })
 
 var PostSchema = new Schema({
-	autor: {type: String, required: true},
-	texto: {type: String, required: true},
+	autor: {type: String},
+	texto: {type: String},
 	data: {type: Date, default: Date.now},
 	comentarios: [CommentsSchema],
-	categoria: {type: String, required: true},
+	categoria: {type: String},
 	likes: {type: Number, default: 0},
 	hashtag: {type: String},
 	// ficamos só com o path
 	ficheiro: {type : String},
-	privacidade: {type : Boolean, required: true}
+	privacidade: {type : Boolean}
 })
 
 module.exports = mongoose.model('Posts', PostSchema, 'posts')

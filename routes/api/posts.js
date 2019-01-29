@@ -24,11 +24,11 @@ router.get('/feedpublico', (req,res)=>{
 /*
     /perfilpublico -> devolve todas as publicações do utilizador X com privacidade Pública e suporta querys no url para categoria e hashtag
 */
-router.get('/perfilpublico', (req,res)=>{
+router.get('/perfilpublico/:idUser', (req,res)=>{
     var purl = url.parse(req.url, true);
     var query = purl.query;
 
-    Post.listaPostsPublicosAutor(req.user.email, query.categoria, query.hashtag)
+    Post.listaPostsPublicosAutor(req.params.idUser, query.categoria, query.hashtag)
         .then(dados => res.jsonp(dados))
         .catch(erro => res.status(500).send('Erro na listagem de posts.'))
 })
@@ -37,11 +37,11 @@ router.get('/perfilpublico', (req,res)=>{
 /*
     /perfilprivador -> devolve todas as publicações do utilizador X com privacidade Privada e suporta querys no url para categoria e hashtag
 */
-router.get('/perfilprivado', (req,res)=>{
+router.get('/perfilprivado/:idUser', (req,res)=>{
     var purl = url.parse(req.url, true);
     var query = purl.query;
 
-    Post.listaPostsPrivadosAutor(req.user.email, query.categoria, query.hashtag)
+    Post.listaPostsPrivadosAutor(req.params.idUser, query.categoria, query.hashtag)
         .then(dados => res.jsonp(dados))
         .catch(erro => res.status(500).send('Erro na listagem de posts.'))
 })
@@ -58,7 +58,6 @@ router.post('/adicionarpost', (req,res)=>{
     })
     
     /* falta adicionar código para ficheiro e isso... */
-
     Post.inserirPost(newPost)
         .then(dados => res.jsonp(dados))
         .catch(erro => res.status(500).send('Erro na inserção de Post.'))
@@ -76,13 +75,29 @@ router.get('/post/:idPost', (req, res) => {
 /*
     Recebe o objeto normalmente
 */
-router.patch('/post/:idPost', (req, res) => {
-    var privado = req.body.privado
-    //console.log("antes-> " + privado)
-    //console.log("depos -> " +!privado)
-    Post.atualizaPrivacidade(req.params.idPost, !privado)
+router.patch('/privacidade/:idPost', (req, res) => {
+    Post.atualizaPrivacidade(req.params.idPost)
         .then(dados => res.jsonp(dados))
         .catch(erro => res.status(500).send('Erro na atualização do post'))
+})
+
+router.patch('/like/:idPost', (req, res) => {
+    Post.fazerLike(req.params.idPost)
+        .then(dados => res.jsonp(dados))
+        .catch(erro => res.status(500).send('Erro na atualização do post'))
+})
+
+router.get('/allposts/:idUser', (req,res)=>{
+    Post.listaTodosUser(req.params.idUser)
+        .then(dados => res.jsonp(dados))
+        .catch(erro => res.status(500).send('Erro na listagem de posts.'))
+})
+
+router.patch('/comentario/:idPost', (req, res) => {
+    //console.log(req.params.idPost+" -> "+req.body.autor+" -> "+req.body.comentario)
+    Post.addComentario(req.params.idPost, req.body.autor, req.body.comentario)
+        .then(dados => res.jsonp(dados))
+        .catch(erro => res.status(500).send('Erro no comentario de posts.'))
 })
 
 module.exports = router

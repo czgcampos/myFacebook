@@ -37,10 +37,31 @@ module.exports.getUserById = function(id, callback){
 	User.findById(id, callback);
 }
 
+
+module.exports.getUserByNick = pid => {
+	return User
+		.findOne({nickname: pid})
+		.exec()
+}
 // Function used to compare Passwords on login
 module.exports.comparePassword = function(candidatePassword, hash, callback){
 	bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
 	  if(err) throw err;
 	  callback(null, isMatch);
 	});
+}
+
+module.exports.alteraImagem = (id, path) => {
+	return User.findOne({nickname: id}, function(err, user){            
+				if(user){
+					console.log(user)
+					user.imagem = path
+					user.save(function(erro) {
+						if (erro) console.log('Erro no update do user: ' + erro);
+					});
+				}else{
+					console.log(err);
+				}
+			})
+			.exec();
 }

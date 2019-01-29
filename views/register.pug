@@ -7,11 +7,12 @@ block content
 			div
 				h3 Registar
 			div
-				form.w3-container(method="POST" action="/users/registar")
+				form.w3-container(method="POST" action="/registar")
 					input.w3-input.w3-costum-color-5(type="text" name="nome" placeholder="Nome" style='margin-top:10px' required)
+					input.w3-input.w3-costum-color-5(type="text" name="nickname" placeholder="Nickname" style='margin-top:10px' required)
 					input.w3-input.w3-costum-color-5(type="text" name="email" placeholder="Email" style='margin-top:10px' required)
 					input.w3-input.w3-costum-color-5(type="password" name="password" placeholder="Password" style='margin-top:10px' required)
-					input.w3-input.w3-costum-color-5(type="password" name="password" placeholder="Repetir password" style='margin-top:10px' required)
+					input.w3-input.w3-costum-color-5(type="password" name="password2" placeholder="Repetir password" style='margin-top:10px' required)
 					input.w3-input.w3-costum-color-5(type='date' name='dataNascimento' style='margin-top:10px')
 					select.w3-input.w3-costum-color-5(style='margin-top:10px' name='genero' required)
 						option(value='' hidden) Género

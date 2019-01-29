@@ -12,6 +12,7 @@ var usersRouter = require('./routes/users');
 var postsRouter = require('./routes/posts');
 
 var postsAPIRouter = require('./routes/api/posts')
+var usersAPIRouter = require('./routes/api/users')
 
 var UserController = require('./controllers/api/user')
 var UserModel = require('./models/user')
@@ -131,6 +132,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/api/posts', postsAPIRouter)
+app.use('/api/users', usersAPIRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

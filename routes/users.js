@@ -2,7 +2,12 @@ var express = require('express');
 var router = express.Router();
 var axios = require('axios')
 
-router.get('/users/:idUser', function(req, res) {
+// Endpoint to get current user
+router.get('/', function(req, res){
+  res.render('aboutMe', req.user);
+})
+
+router.get('/:idUser', function(req, res) {
     axios.get('http://localhost:5000/api/users/user/' + req.params.idUser)
       .then(resposta=> res.render('aboutMe', { user: resposta.data }))
       .catch(erro => {
