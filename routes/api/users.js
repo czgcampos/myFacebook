@@ -20,4 +20,10 @@ router.patch('/alterarimagem/:idUser', (req, res) => {
         .catch(erro => res.status(500).send('Erro no update de user'))
 })
 
+router.post('/atualiza/:idUser', (req, res) => {
+    User.alteraDescricao(req.params.idUser, req.body.texto)
+    .then(dados => res.jsonp(dados))
+    .catch(erro => res.status(500).send('Erro no update de user'))
+})
+
 module.exports = router

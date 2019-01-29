@@ -15,6 +15,15 @@ router.get('/:idUser', function(req, res) {
         res.render('error', {error: erro, message: "Erro ao carregar user da BD."})
       })
 })
+
+router.post('/atualiza', function(req, res) {
+  axios.post('http://localhost:5000/api/users/atualiza/' + req.user.nickname, {texto: req.body.texto})
+      .then(resposta=> res.redirect('/feed'))
+      .catch(erro => {
+        console.log('Erro ao carregar user.')
+        res.render('error', {error: erro, message: "Erro ao carregar user da BD."})
+      })
+})
   
 /* mudar a privacidade */
 /*

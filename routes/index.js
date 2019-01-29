@@ -74,9 +74,19 @@ router.post('/registar', function(req, res) {
   res.redirect('/login');
 });
 
+// Proteger com middleware
+function verificaAutenticacao(req, res, next){
+  if(req.isAuthenticated()) next()
+  else res.redirect("/login")
+}
+
 router.get('/feed', (req,res) => {
   axios.get('http://localhost:5000/api/posts/feedpublico')
-    .then(resposta=> res.render('feed', { posts: resposta.data }))
+    .then(resposta=> {
+      if (req.user) res.render('feed', { posts: resposta.data })
+      else res.render('feed2', { posts: resposta.data })
+    }
+      )
     .catch(erro => {
       console.log('Erro ao carregar dados da BD.')
       res.render('error', {error: erro, message: "Erro ao carregar dados da BD."})
@@ -88,8 +98,7 @@ router.get('/adicionarpost', function(req, res, next) {
 });
 
 router.post('/adicionarpost', function(req, res) {
-  console.log(req.body);
-  axios.post('http://localhost:5000/api/posts/adicionarpost', req.body)
+  axios.post('http://localhost:5000/api/posts/adicionarpost/'+req.user.nickname, req.body)
     .then(()=> res.redirect('http://localhost:5000/feed'))
     .catch(erro => {
       console.log('Erro ao inserir dados da BD.')
@@ -97,7 +106,7 @@ router.post('/adicionarpost', function(req, res) {
     })
 });
 
-router.get('/perfilpublico', (req,res) => {
+router.get('/perfilpublico', verificaAutenticacao, (req,res) => {
   axios.get('http://localhost:5000/api/posts/perfilpublico/'+req.user.nickname)
     .then(resposta=> res.render('userPubs', { posts: resposta.data }))
     .catch(erro => {
@@ -106,7 +115,7 @@ router.get('/perfilpublico', (req,res) => {
     })
 })
 
-router.get('/perfilprivado', (req,res) => {
+router.get('/perfilprivado', verificaAutenticacao, (req,res) => {
   axios.get('http://localhost:5000/api/posts/perfilprivado/'+req.user.nickname)
     .then(resposta=> res.render('userPubs', { posts: resposta.data }))
     .catch(erro => {
@@ -115,16 +124,16 @@ router.get('/perfilprivado', (req,res) => {
     })
 })
 
-router.get('/editarconta', function(req, res) {
+router.get('/editarconta', verificaAutenticacao, function(req, res) {
   res.render('editCount', {user: req.user});
 })
 
-router.get('/sobremim', function(req, res, next) {
+router.get('/sobremim', verificaAutenticacao, function(req, res, next) {
   console.log(req.user)
   res.render('aboutMe', {user: req.user});
 });
 
-router.get('/exportar', (req,res) => {
+router.get('/exportar', verificaAutenticacao, (req,res) => {
   axios.get('http://localhost:5000/api/posts/allposts/'+req.user.email)
     .then(resposta=> {
       var json = JSON.stringify(resposta.data);
@@ -140,11 +149,11 @@ router.get('/exportar', (req,res) => {
     })
 })
 
-router.get('/importar', function(req, res){
+router.get('/importar', verificaAutenticacao, function(req, res){
   res.render('import');
 })
 
-router.post('/importar', function(req, res) {
+router.post('/importar', verificaAutenticacao, function(req, res) {
     console.log("importar");
     var form = new formidable.IncomingForm()
 
@@ -160,6 +169,7 @@ router.post('/importar', function(req, res) {
             var obj = JSON.parse(fs.readFileSync(path, 'utf8', function(err, contents) {
                 console.log("li");
                 Post.insertMany(obj);
+                res.redirect('/feed');
            }));
         }
         else{
@@ -192,7 +202,7 @@ router.get('/auth/facebook',
   }
 );
 
-router.post('/alterarimagem', function(req,res) {
+router.post('/alterarimagem', verificaAutenticacao, function(req,res) {
     var form = new formidable.IncomingForm()
     console.log("entrei no post")
 

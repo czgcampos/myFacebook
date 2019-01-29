@@ -49,18 +49,22 @@ router.get('/perfilprivado/:idUser', (req,res)=>{
 /*
     Inserir um Post
 */
-router.post('/adicionarpost', (req,res)=>{
+router.post('/adicionarpost/:idAutor', (req,res)=>{
+    if (req.body.privacidade == "publico") var c = true;
+    else var c = false;
+
     var newPost = new PostModel({
-        autor: req.user.email,
+        autor: req.params.idAutor,
         texto: req.body.texto,
         categoria: req.body.categoria,
-        hashtag: req.body.hashtag
+        hashtag: req.body.hashtag,
+        privacidade: c
     })
-    
-    /* falta adicionar código para ficheiro e isso... */
+
     Post.inserirPost(newPost)
-        .then(dados => res.jsonp(dados))
-        .catch(erro => res.status(500).send('Erro na inserção de Post.'))
+            .then(dados => res.jsonp(dados))
+            .catch(erro => res.status(500).send('Erro na inserção de Post.'))
+    
 })
 
 /*

@@ -65,3 +65,18 @@ module.exports.alteraImagem = (id, path) => {
 			})
 			.exec();
 }
+
+module.exports.alteraDescricao = (id, texto) => {
+	return User.findOne({nickname: id}, function(err, user){            
+				if(user){
+					console.log(user)
+					user.descricao = texto
+					user.save(function(erro) {
+						if (erro) console.log('Erro no update do user: ' + erro);
+					});
+				}else{
+					console.log(err);
+				}
+			})
+			.exec();
+}
