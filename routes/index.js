@@ -4,6 +4,7 @@ var axios = require('axios')
 var passport = require('passport')
 var fs = require('fs')
 let formidable = require('formidable')
+var url = require('url');
 
 
 var User = require('../models/user');
@@ -81,7 +82,16 @@ function verificaAutenticacao(req, res, next){
 }
 
 router.get('/feed', (req,res) => {
-  axios.get('http://localhost:5000/api/posts/feedpublico')
+  var purl = url.parse(req.url, true);
+  var query = purl.query;
+
+  if (query.categoria && query.hashtag) var q = "?categoria="+query.categoria+"hashtag="+query.hashtag;
+  else if (query.categoria) var q = "?categoria="+query.categoria
+        else if (query.hashtag) var q = "?hashtag="+query.hashtag
+        else var q = "";
+  
+
+  axios.get('http://localhost:5000/api/posts/feedpublico'+q)
     .then(resposta=> {
       if (req.user) res.render('feed', { posts: resposta.data })
       else res.render('feed2', { posts: resposta.data })

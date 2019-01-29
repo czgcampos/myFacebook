@@ -15,7 +15,6 @@ var PostModel = require('../../models/post');
 router.get('/feedpublico', (req,res)=>{
     var purl = url.parse(req.url, true);
     var query = purl.query;
-
     Post.listaPostsPublicos(query.categoria, query.hashtag)
         .then(dados => res.jsonp(dados))
         .catch(erro => res.status(500).send('Erro na listagem de posts.'))
@@ -50,8 +49,6 @@ router.get('/perfilprivado/:idUser', (req,res)=>{
     Inserir um Post
 */
 router.post('/adicionarpost/:idAutor', (req,res)=>{
-    console.log(req.body);
-
     if (req.body.privacidade == "publico") var c = true;
     else var c = false;
 
