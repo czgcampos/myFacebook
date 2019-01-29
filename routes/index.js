@@ -98,6 +98,7 @@ router.get('/adicionarpost', function(req, res, next) {
 });
 
 router.post('/adicionarpost', function(req, res) {
+  console.log(req.body);
   axios.post('http://localhost:5000/api/posts/adicionarpost/'+req.user.nickname, req.body)
     .then(()=> res.redirect('http://localhost:5000/feed'))
     .catch(erro => {

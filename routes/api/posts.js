@@ -50,6 +50,8 @@ router.get('/perfilprivado/:idUser', (req,res)=>{
     Inserir um Post
 */
 router.post('/adicionarpost/:idAutor', (req,res)=>{
+    console.log(req.body);
+
     if (req.body.privacidade == "publico") var c = true;
     else var c = false;
 
